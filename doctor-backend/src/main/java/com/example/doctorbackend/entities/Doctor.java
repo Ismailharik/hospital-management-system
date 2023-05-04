@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Doctor {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private String id;
     @NotNull(message = "Doctor name required")
     private String name;
@@ -22,9 +22,11 @@ public class Doctor {
     @NotNull(message = "Doctor email required")
     private String email;
     private String speciality;
+    // initializing values
+    private Double rating=0D;//rating Percent
+    private Long numberOfRatings=0L; //sum of all rates
+    private Double totalRating=0D; //nbr of patients rated
     private String phone;
-    private Double review;
-    private Double totalScore;
-    private Double satisfaction;
     private String image;
+
 }

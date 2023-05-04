@@ -43,9 +43,6 @@ public class DoctorsServiceImpl implements DoctorsService {
         existingDoctor.setName(doctor.getName());
         existingDoctor.setSpeciality(doctor.getSpeciality());
         existingDoctor.setPhone(doctor.getPhone());
-        existingDoctor.setReview(doctor.getReview());
-        existingDoctor.setTotalScore(doctor.getTotalScore());
-        existingDoctor.setSatisfaction(doctor.getSatisfaction());
         existingDoctor.setImage(doctor.getImage());
         return doctorRepository.save(existingDoctor);
     }

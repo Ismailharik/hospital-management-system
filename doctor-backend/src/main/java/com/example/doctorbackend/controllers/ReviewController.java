@@ -10,18 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/api/v1/reviews")
 @AllArgsConstructor
 public class ReviewController {
 
 
     private ReviewService reviewService;
 
-    @PostMapping("/{doctorId}")
-    public ResponseEntity<Review> addReview(@PathVariable String doctorId, @RequestBody Review review) {
-        Review createdReview = reviewService.addReview(doctorId, review);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
+    @PostMapping("/doctors/{doctorId}/reviews")
+    public ResponseEntity<Review> addReviewForDoctor(@PathVariable String doctorId,
+                                                     @RequestParam String patientId,
+                                                     @RequestBody Review review) {
+        Review addedReview = reviewService.addReview(doctorId, patientId, review);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedReview);
     }
+
 
     @GetMapping("/{doctorId}")
     public ResponseEntity<List<Review>> getReviewsByDoctor(@PathVariable String doctorId) {

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document
 @Data
@@ -14,10 +16,13 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    @ManyToOne
+    @DBRef
+    @Field("doctor_id")
     private Doctor doctor;
-    @ManyToOne
+
+    @DBRef
+    @Field("patient_id")
     private Patient patient;
     private String comment;
-    private int rating;// should range between 0 & 5
+    private Double rating;// should range between 0 & 5
 }
