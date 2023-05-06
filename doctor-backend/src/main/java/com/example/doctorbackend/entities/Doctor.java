@@ -20,6 +20,7 @@ public class Doctor {
     private String name;
     @Email(message = "Please enter a valid email")
     @NotNull(message = "Doctor email required")
+    @Column(unique = true)
     private String email;
     private String speciality;
     // initializing values
