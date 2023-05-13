@@ -10,7 +10,6 @@ spring:
       database: hospital-db
       repositories:
         enabled: 'true'
-
   sql:
     init:
       mode: always

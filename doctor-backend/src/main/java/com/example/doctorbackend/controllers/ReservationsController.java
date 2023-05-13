@@ -60,4 +60,16 @@ public class ReservationsController {
         List<Reservation> reservations = reservationService.getReservationsOrderedByDate();
         return ResponseEntity.ok(reservations);
     }
+    @GetMapping("/filtredByDoctor/{doctorId}")
+    public ResponseEntity<List<Reservation>> getReservationsByDoctorId(@PathVariable String doctorId){
+        // get reservations specific to a doctor
+        List<Reservation> reservations = reservationService.getReservationsByDoctorId(doctorId);
+        return ResponseEntity.ok(reservations);
+    }
+    @GetMapping("/filtredByPatient/{patientId}")
+    public ResponseEntity<List<Reservation>> getReservationsByPatientId(@PathVariable String patientId){
+        // get reservations specific to a doctor
+        List<Reservation> reservations = reservationService.getReservationsByPatientId(patientId);
+        return ResponseEntity.ok(reservations);
+    }
 }

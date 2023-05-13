@@ -32,12 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
-
     @Override
     public Category updateCategory(String id, Category category) {
         Category existingCategory = getCategoryById(id);
         existingCategory.setName(category.getName());
-        existingCategory.setNumberOfDoctors(category.getNumberOfDoctors());
         existingCategory.setDoctors(category.getDoctors());
         return categoryRepository.save(existingCategory);
     }
@@ -47,4 +45,5 @@ public class CategoryServiceImpl implements CategoryService {
         Category existingCategory = getCategoryById(id);
         categoryRepository.delete(existingCategory);
     }
+
 }

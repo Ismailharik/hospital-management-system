@@ -1,6 +1,8 @@
 package com.example.doctorbackend.controllers;
 
 import com.example.doctorbackend.auth.RegisterRequest;
+import com.example.doctorbackend.entities.Doctor;
+import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.services.AdminService;
 import com.example.doctorbackend.user.Role;
 import lombok.AllArgsConstructor;
@@ -15,16 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminService adminService;
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('admin:read')")
-    public String get() {
-        return "GET:: admin controller";
-    }
 
-    @PostMapping("/add_doctor")
-    public ResponseEntity<String> addManager(@RequestBody RegisterRequest request) {
+
+    @PostMapping("/add_doctor/{categoryId}")
+    public ResponseEntity<String> addManager(@RequestBody RegisterRequest request,@PathVariable String categoryId) {
         request.setRole(Role.DOCTOR);
-        this.adminService.addDoctor(request);
+
+        adminService.addDoctor(request,categoryId);
+
         return ResponseEntity.ok("Doctor user created successfully.");
     }
 }

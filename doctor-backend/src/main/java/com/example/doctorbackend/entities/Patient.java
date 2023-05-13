@@ -24,7 +24,6 @@ public class Patient {
     @NotNull(message = "email required")
     private String email;
     private String phone;
-    @NotNull(message = "Password required")
-    private String password;
+
 }
 

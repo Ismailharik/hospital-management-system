@@ -73,4 +73,16 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> reservations = reservationRepository.findAll(Sort.by(Sort.Direction.DESC, "reservationDate"));
         return reservations;
     }
+
+    @Override
+    public List<Reservation> getReservationsByDoctorId(String doctorId) {
+        List<Reservation> reservations = reservationRepository.findByDoctorId(doctorId);
+        return reservations;
+    }
+
+    @Override
+    public List<Reservation> getReservationsByPatientId(String patientId) {
+        List<Reservation> reservations = reservationRepository.findByPatientId(patientId);
+        return reservations;
+    }
 }

@@ -2,8 +2,11 @@ package com.example.doctorbackend;
 
 import com.example.doctorbackend.auth.AuthenticationService;
 import com.example.doctorbackend.auth.RegisterRequest;
+import com.example.doctorbackend.entities.Category;
 import com.example.doctorbackend.entities.Patient;
+import com.example.doctorbackend.repositories.CategoryRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
+import com.example.doctorbackend.services.CategoryService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,24 +23,33 @@ public class DoctorBackendApplication {
     }
 
     @Bean
-    CommandLineRunner runner(PatientRepository pr, AuthenticationService service) {
-//		return args -> {
-//			pr.saveAll(List.of(
-//			new Patient(1L,"ismail1","ismail1@gmail.com","06246721","1234"),
-//			new Patient(2L,"ismail2","ismail2@gmail.com","06245561","1234"),
-//			new Patient(3L,"ismail3","ismail3@gmail.com","06434671","1234"),
-//			new Patient(4L,"ismail4","ismail4@gmail.com","06796981","1234")
-//			));
+    CommandLineRunner runner(
+            CategoryRepository categoryRepository,
+            AuthenticationService service) {
         return args -> {
-            var admin = RegisterRequest.builder()
-                    .firstname("Admin")
-                    .lastname("Admin")
-                    .email("admin@mail.com")
-                    .password("password")
-                    .role(ADMIN)
-                    .build();
-            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+
+//            Category category1 = new Category();
+//            category1.setName("Cardiology");
+//            Category category2 = new Category();
+//            category2.setName("Dermatology");
+//            Category category3 = new Category();
+//            category3.setName("Endocrinology");
+//            Category category4 = new Category();
+//            category4.setName("Pediatrics");
+//            categoryRepository.saveAll(List.of(category1, category2, category3, category4));
+//
+//
+//            var admin = RegisterRequest.builder()
+//                    .firstname("Admin")
+//                    .lastname("Admin")
+//                    .email("admin@mail.com")
+//                    .password("password")
+//                    .role(ADMIN)
+//                    .build();
+//            System.out.println("Admin token: " + service.register(admin).getAccessToken());
         };
-    };
+    }
+
+    ;
 }
 

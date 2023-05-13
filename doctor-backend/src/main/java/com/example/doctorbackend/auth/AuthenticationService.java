@@ -1,6 +1,9 @@
 package com.example.doctorbackend.auth;
 
 import com.example.doctorbackend.config.JwtService;
+import com.example.doctorbackend.entities.Patient;
+import com.example.doctorbackend.repositories.DoctorRepository;
+import com.example.doctorbackend.services.PatientsService;
 import com.example.doctorbackend.token.Token;
 import com.example.doctorbackend.token.TokenRepository;
 import com.example.doctorbackend.token.TokenType;
@@ -26,6 +29,8 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final PatientsService patientsService;
+
 
   public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
@@ -35,10 +40,21 @@ public class AuthenticationService {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .build();
+    Patient patient = new Patient();
+    patient.setName(request.getFirstname()+ " "+ request.getLastname());
+    patient.setEmail(request.getEmail());
+    patient.setPhone(request.getPhone());
+
+//    patient.setPassword(request.getPassword());
+    patientsService.addPatient(patient);
     var savedUser = repository.save(user);
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
+
+    // save doc
+
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)

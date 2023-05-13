@@ -16,5 +16,7 @@ public class RegisterRequest {
   private String lastname;
   private String email;
   private String password;
+  private String phone;
+  private String speciality;
   private Role role;// if I want to remove this I should use map this object
 }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -19,8 +20,8 @@ public class Category {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String name;
-    private Long numberOfDoctors;
+//    private Long numberOfDoctors; // the size of doctors array
     @DBRef
     @Field("doctor_id")
-    private List<Doctor> doctors;
+    private List<Doctor> doctors=new ArrayList<>();
 }
