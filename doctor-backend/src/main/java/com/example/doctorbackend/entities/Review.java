@@ -22,7 +22,7 @@ public class Review {
 
     @DBRef
     @Field("patient_id")
-    private Patient patient;
+    private Patient patient; // should be removed
     private String comment;
     private Double rating;// should range between 0 & 5
 }
