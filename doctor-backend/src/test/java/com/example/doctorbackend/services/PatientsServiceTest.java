@@ -31,7 +31,7 @@ public class PatientsServiceTest {
     @Test
     public void givenValidPatient_whenSavePatient_thenPatientIsSaved() {
         // Given
-        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111", "1234");
+        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111");
         Mockito.when(patientRepository.save(patient)).thenReturn(patient);
 
         // When
@@ -45,7 +45,7 @@ public class PatientsServiceTest {
     @Test
     public void givenPatientEmail_whenGetPatientByEmail_thenPatientIsReturned() {
         // Given
-        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111", "1234");
+        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111");
         given(patientRepository.findByEmail(anyString())).willReturn(Optional.ofNullable(patient));
 
         // When
@@ -59,7 +59,7 @@ public class PatientsServiceTest {
     @Test
     public void givenPatientId_whenGetPatientById_thenPatientIsReturned() {
         // Given
-        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111", "1234");
+        Patient patient = new Patient("CR1", "patient1", "patient1@gmail.com", "06111122111");
         given(patientRepository.findById(anyString())).willReturn(Optional.ofNullable(patient));
 
         // When
@@ -100,13 +100,13 @@ public class PatientsServiceTest {
         Patient patient1 = new Patient("CR1",
                 "patient1",
                 "patient1@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
         Patient patient2 = new Patient("CR2",
                 "patient2",
                 "patient2@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
         List<Patient> patients = List.of(patient1, patient2);
 
         given(patientRepository.findAll()).willReturn(patients);
@@ -119,8 +119,8 @@ public class PatientsServiceTest {
         Patient patient = new Patient("CR1"
                 , "patient1",
                 "patient1@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
         given(patientRepository.findById(anyString())).willReturn(Optional.ofNullable(patient));
         Patient result = patientsService.getPatientById("CR1");
         assertThat(result.getEmail().equals(patient.getEmail()));
@@ -147,8 +147,8 @@ public class PatientsServiceTest {
                 "CR1",
                 "patient1",
                 "patient1@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
 
         // Mock the findById method to return the patient object when called with the patient's ID
         given(patientRepository.findById(patient.getId())).willReturn(Optional.of(patient));
@@ -171,8 +171,8 @@ public class PatientsServiceTest {
                 "CR1",
                 "patient1",
                 "patient1@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
 
         given(patientRepository.save(patient)).willReturn(patient);
         Patient addedPatient = patientsService.addPatient(patient);
@@ -187,8 +187,8 @@ public class PatientsServiceTest {
                 "CR1",
                 "patient1",
                 "patient1@gmail.com",
-                "06111122111",
-                "1234");
+                "06111122111"
+                );
 
         // update method require get By Id method from repo
         given(patientRepository.findById(patient.getId())).willReturn(Optional.of(patient));

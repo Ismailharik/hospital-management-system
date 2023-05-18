@@ -7,6 +7,7 @@ import com.example.doctorbackend.services.PatientsService;
 import com.example.doctorbackend.token.Token;
 import com.example.doctorbackend.token.TokenRepository;
 import com.example.doctorbackend.token.TokenType;
+import com.example.doctorbackend.user.Role;
 import com.example.doctorbackend.user.User;
 import com.example.doctorbackend.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,7 @@ public class AuthenticationService {
 
 
   public AuthenticationResponse register(RegisterRequest request) {
+
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
@@ -40,13 +42,19 @@ public class AuthenticationService {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .build();
-    Patient patient = new Patient();
-    patient.setName(request.getFirstname()+ " "+ request.getLastname());
-    patient.setEmail(request.getEmail());
-    patient.setPhone(request.getPhone());
+
+    if (request.getRole().equals(Role.USER)){
+      Patient patient = new Patient();
+      patient.setName(request.getFirstname()+ " "+ request.getLastname());
+      patient.setEmail(request.getEmail());
+      patient.setPhone(request.getPhone());
 
 //    patient.setPassword(request.getPassword());
-    patientsService.addPatient(patient);
+      patientsService.addPatient(patient);
+    }else if (request.getRole().equals(Role.DOCTOR)){
+
+    }
+
     var savedUser = repository.save(user);
 
     var jwtToken = jwtService.generateToken(user);

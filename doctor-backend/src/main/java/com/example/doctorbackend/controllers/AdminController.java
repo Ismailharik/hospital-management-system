@@ -20,7 +20,10 @@ public class AdminController {
 
 
     @PostMapping("/add_doctor/{categoryId}")
-    public ResponseEntity<String> addManager(@RequestBody RegisterRequest request,@PathVariable String categoryId) {
+    public ResponseEntity<String> addDoctor(
+            @RequestBody RegisterRequest request,
+            @PathVariable String categoryId
+    ) {
         request.setRole(Role.DOCTOR);
 
         adminService.addDoctor(request,categoryId);

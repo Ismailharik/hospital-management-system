@@ -20,7 +20,7 @@ public class DoctorRepositoryTests {
     public void createDoctorTest() {
         Doctor doctor = new Doctor();
         doctor.setName("test name");
-        doctor.setEmail("test.name@example.com");
+        doctor.setEmail("testname@example.com");
         doctor.setSpeciality("Cardiology");
         doctor.setRating(4.5);
         doctor.setPhone("123456789");

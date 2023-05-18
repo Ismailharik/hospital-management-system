@@ -6,7 +6,8 @@ import com.example.doctorbackend.entities.Category;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.repositories.CategoryRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
-import com.example.doctorbackend.services.CategoryService;
+
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,7 @@ public class DoctorBackendApplication {
     @Bean
     CommandLineRunner runner(
             CategoryRepository categoryRepository,
+
             AuthenticationService service) {
         return args -> {
 

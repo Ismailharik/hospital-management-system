@@ -21,7 +21,7 @@ public class ReviewRepositoryTest {
 
     @Test
     public void findReviewByDoctorTest(){
-        Patient patient=new Patient("CR1","ismail","ismail@gmail.com","06111122111","1234");
+        Patient patient=new Patient("CR1","ismail","ismail@gmail.com","06111122111");
         Doctor doctor =new Doctor();
         doctor.setId("A");
         doctor.setEmail("notexist@gmail.com");
