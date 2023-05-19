@@ -2,11 +2,14 @@ package com.example.doctorbackend.controllers;
 
 import com.example.doctorbackend.entities.Category;
 import com.example.doctorbackend.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,8 +36,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category createdCategory = categoryService.createCategory(category);
+    public ResponseEntity<Category> createCategory(@RequestParam("file") MultipartFile file,@Valid @ModelAttribute Category category) throws IOException {
+        Category createdCategory = categoryService.createCategory(file, category);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 

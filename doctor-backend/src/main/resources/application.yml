@@ -17,6 +17,12 @@ spring:
   springdoc:
     swagger-ui: path=/swagger-ui.html
 
+  http:
+    multipart:
+    # Max file size.
+    max-file-size: 1Mb
+    # Max request size.
+    max-request-size: 10Mb
 application:
   security:
     jwt:
