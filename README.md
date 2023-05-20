@@ -3,7 +3,7 @@
 
 <div align="center">
 <img  width="100" src="./images/springboot.png">
-<img  width="100" src="./images/flutter.png">
+<img  width="170" src="./images/flutter.png">
 <img  width="80" src="./images/zipkin.png">
 <img  width="80" src="./images/docker.png">
 <img  width="70" src="./images/docker-compose.png">
