@@ -30,9 +30,8 @@ public class AdminService {
         request.setRole(Role.DOCTOR);
         this.authenticationService.register(request,file);
         //get the saved doctor and store him on specific category
-
+        System.out.println(request.toString());
             Optional<Doctor> savedDoctor = doctorRepository.findByEmail(request.getEmail());
-
             Category category= categoryService.getCategoryById(categoryId);
             if (category==null){
                 throw new NotFoundException("Category","id",categoryId);

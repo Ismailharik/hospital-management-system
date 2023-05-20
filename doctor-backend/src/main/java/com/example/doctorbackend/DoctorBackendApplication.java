@@ -40,14 +40,14 @@ public class DoctorBackendApplication {
 //            categoryRepository.saveAll(List.of(category1, category2, category3, category4));
 //
 //
-            var admin = RegisterRequest.builder()
-                    .firstname("Admin")
-                    .lastname("Admin")
-                    .email("admin@mail.com")
-                    .password("password")
-                    .role(ADMIN)
-                    .build();
-            System.out.println("Admin token: " + service.register(admin,null).getAccessToken());
+//            var admin = RegisterRequest.builder()
+//                    .firstname("Admin")
+//                    .lastname("Admin")
+//                    .email("admin@mail.com")
+//                    .password("password")
+//                    .role(ADMIN)
+//                    .build();
+//            System.out.println("Admin token: " + service.register(admin,null).getAccessToken());
         };
     }
 

@@ -29,6 +29,7 @@ public class Doctor extends User {
 //    @Column(unique = true)
 //    private String email;
     private String comment;
+    private String speciality;
     // initializing values
     private Double rating=0D;//rating Percent
     private Long numberOfRatings=0L; //sum of all rates

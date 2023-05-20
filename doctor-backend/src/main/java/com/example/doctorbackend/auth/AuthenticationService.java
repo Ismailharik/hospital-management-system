@@ -7,6 +7,7 @@ import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.repositories.AdminRepository;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
+//import com.example.doctorbackend.repositories.UserRepository;
 import com.example.doctorbackend.services.DoctorsService;
 import com.example.doctorbackend.services.PatientsService;
 import com.example.doctorbackend.token.Token;
@@ -14,12 +15,7 @@ import com.example.doctorbackend.token.TokenRepository;
 import com.example.doctorbackend.token.TokenType;
 import com.example.doctorbackend.user.Role;
 import com.example.doctorbackend.user.User;
-import com.example.doctorbackend.user.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,8 +35,8 @@ public class AuthenticationService {
     private final PatientsService patientsService;
     private final DoctorsService doctorsService;
     private final DoctorRepository doctorRepository;
-    private final PatientRepository patientRepository;
     private final AdminRepository adminRepository;
+//    private final UserRepository userRepository;
 
 
     public AuthenticationResponse register(RegisterRequest request, MultipartFile file) throws IOException {
@@ -54,7 +50,8 @@ public class AuthenticationService {
 //                .build();
         if (request.getRole().equals(Role.USER)) {
             Patient patient = new Patient();
-            patient.setFirstname(request.getFirstname() + " " + request.getLastname());
+            patient.setFirstname(request.getFirstname());
+            patient.setLastname(request.getLastname());
             patient.setEmail(request.getEmail());
             patient.setPassword(passwordEncoder.encode(request.getPassword()));
             patient.setPhone(request.getPhone());
@@ -69,13 +66,14 @@ public class AuthenticationService {
                     .build();
         } else if (request.getRole().equals(Role.DOCTOR)) {
             Doctor doctor = new Doctor();
-            doctor.setFirstname(request.getFirstname() + " " + request.getLastname());
+            doctor.setFirstname(request.getFirstname());
+            doctor.setLastname(request.getLastname());
             doctor.setEmail(request.getEmail());
             doctor.setPassword(passwordEncoder.encode(request.getPassword()));
             doctor.setPhone(request.getPhone());
             doctor.setRole(request.getRole());
             doctor.setPhone(request.getPhone());
-            Doctor savedDoctor=doctorsService.createDoctor(doctor);
+            Doctor savedDoctor=doctorsService.createDoctor(doctor,file);
             var jwtToken = jwtService.generateToken(doctor);
             var refreshToken = jwtService.generateRefreshToken(doctor);
             saveUserToken(savedDoctor, jwtToken);
@@ -86,7 +84,8 @@ public class AuthenticationService {
         } else if (request.getRole().equals(Role.ADMIN)) {
             //Admin will be stored only one time no need for it
             Admin admin = new Admin();
-            admin.setFirstname(request.getFirstname() + " " + request.getLastname());
+            admin.setFirstname(request.getFirstname());
+            admin.setLastname(request.getLastname());
             admin.setEmail(request.getEmail());
             admin.setPassword(passwordEncoder.encode(request.getPassword()));
             admin.setPhone(request.getPhone());

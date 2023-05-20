@@ -29,7 +29,9 @@ public class AdminController {
             @PathVariable String categoryId
     ) throws IOException {
         request.setRole(Role.DOCTOR);
-
+        System.out.println();
+        System.out.println("--------------------");
+        System.out.println(request.toString());
         adminService.addDoctor(request,categoryId,file);
 
         return ResponseEntity.ok("Doctor user created successfully.");

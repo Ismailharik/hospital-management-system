@@ -4,6 +4,7 @@ import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.error.ConflictException;
 import com.example.doctorbackend.error.NotFoundException;
 import com.example.doctorbackend.repositories.PatientRepository;
+import com.example.doctorbackend.user.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ public class PatientsServiceImpl implements PatientsService {
 
     @Override
     public List<Patient> getAllPatients() {
-        return patientsRepository.findAll();
+        return patientsRepository.findByRole(Role.USER);
     }
 
     @Override
@@ -58,11 +59,13 @@ public class PatientsServiceImpl implements PatientsService {
             System.out.println("create stories directory");
             f.mkdir();
         }
+
         String imageName = patient.getEmail() + ".jpg";// while users mail is unique so we will stored their images by their mails
         String imageSrc = imagesLocation + "/" + imageName;
         patient.setImage(imageSrc);
         Files.write(Paths.get(imageSrc), file.getBytes());// add image in server
         return patientsRepository.save(patient);
+
     }
 
     @Override
