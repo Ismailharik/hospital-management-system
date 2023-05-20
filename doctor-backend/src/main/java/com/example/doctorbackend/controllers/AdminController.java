@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -23,12 +24,13 @@ public class AdminController {
 
     @PostMapping("/add_doctor/{categoryId}")
     public ResponseEntity<String> addDoctor(
-            @RequestBody RegisterRequest request,
+            @ModelAttribute RegisterRequest request,
+            @RequestParam("file") MultipartFile file,
             @PathVariable String categoryId
     ) throws IOException {
         request.setRole(Role.DOCTOR);
 
-        adminService.addDoctor(request,categoryId);
+        adminService.addDoctor(request,categoryId,file);
 
         return ResponseEntity.ok("Doctor user created successfully.");
     }
