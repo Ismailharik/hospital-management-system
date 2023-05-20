@@ -5,7 +5,6 @@ import com.example.doctorbackend.auth.RegisterRequest;
 import com.example.doctorbackend.entities.Category;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.repositories.CategoryRepository;
-import com.example.doctorbackend.repositories.PatientRepository;
 
 
 import org.springframework.boot.CommandLineRunner;
@@ -41,14 +40,14 @@ public class DoctorBackendApplication {
 //            categoryRepository.saveAll(List.of(category1, category2, category3, category4));
 //
 //
-//            var admin = RegisterRequest.builder()
-//                    .firstname("Admin")
-//                    .lastname("Admin")
-//                    .email("admin@mail.com")
-//                    .password("password")
-//                    .role(ADMIN)
-//                    .build();
-//            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+            var admin = RegisterRequest.builder()
+                    .firstname("Admin")
+                    .lastname("Admin")
+                    .email("admin@mail.com")
+                    .password("password")
+                    .role(ADMIN)
+                    .build();
+            System.out.println("Admin token: " + service.register(admin).getAccessToken());
         };
     }
 

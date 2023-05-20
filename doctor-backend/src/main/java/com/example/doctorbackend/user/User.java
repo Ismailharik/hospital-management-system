@@ -2,6 +2,8 @@ package com.example.doctorbackend.user;
 
 import com.example.doctorbackend.token.Token;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,18 +17,24 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "people")
 @Table(name = "_user")
-public class User implements UserDetails {
+
+public abstract class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private String id;
   private String firstname;
   private String lastname;
+  private String phone;
+  private String image;
+  @Email(message = "Please enter a valid email")
+  @NotNull(message = "Doctor email required")
+  @Column(unique = true)
   private String email;
   private String password;
 

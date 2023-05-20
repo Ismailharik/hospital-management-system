@@ -51,7 +51,7 @@ public class PatientsServiceImpl implements PatientsService {
     @Override
     public Patient updatePatient(String id, Patient patientDetails)  {
         Patient patient = getPatientById(id);
-        patient.setName(patientDetails.getName());
+        patient.setFirstname(patientDetails.getFirstname());
         patient.setPhone(patientDetails.getPhone());
 
         // he should not update his email
