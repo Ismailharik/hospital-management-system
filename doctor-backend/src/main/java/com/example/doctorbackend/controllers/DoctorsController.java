@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,6 +30,14 @@ public class DoctorsController {
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable("id") String id) {
         DoctorDTO doctor = doctorService.getDoctorById(id);
+        if (doctor == null) {
+            throw new NotFoundException("Doctor not found with id: " + id);
+        }
+        return new ResponseEntity<>(doctor, HttpStatus.OK);
+    }
+    @PostMapping("/add_image/{id}")
+    public ResponseEntity<DoctorDTO> addImage(@PathVariable("id") String id, @RequestParam MultipartFile file) throws IOException {
+        DoctorDTO doctor = doctorService.addImage(id,file);
         if (doctor == null) {
             throw new NotFoundException("Doctor not found with id: " + id);
         }

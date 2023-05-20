@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/patients")
 @AllArgsConstructor
@@ -34,10 +35,19 @@ public class PatientsController {
         return ResponseEntity.ok(patient);
     }
 
+    @PostMapping("/add_image/{id}")
+    public ResponseEntity<PatientDTO> addImage(
+            @PathVariable String id,
+            @RequestParam MultipartFile file
+    ) throws NotFoundException, IOException {
+        PatientDTO patient = patientsService.addImage(id, file);
+        return ResponseEntity.ok(patient);
+    }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<PatientDTO> getPatientByEmail(@Valid @Email @PathVariable String email) {
         PatientDTO patient = patientsService.getPatientByEmail(email);
-            return ResponseEntity.ok(patient);
+        return ResponseEntity.ok(patient);
     }
 
 //    @PostMapping
@@ -47,7 +57,7 @@ public class PatientsController {
 //    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id,@Valid @RequestBody PatientDTO patient) throws NotFoundException {
+    public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id, @Valid @RequestBody PatientDTO patient) throws NotFoundException {
         PatientDTO updatedPatient = patientsService.updatePatient(id, patient);
         return ResponseEntity.ok(updatedPatient);
     }

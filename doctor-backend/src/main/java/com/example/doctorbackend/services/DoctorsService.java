@@ -20,4 +20,6 @@ public interface DoctorsService {
     DoctorDTO updateDoctor(String id, DoctorDTO doctorDTO);
 
     void deleteDoctor(String id);
+
+    DoctorDTO addImage(String id, MultipartFile file) throws IOException;
 }

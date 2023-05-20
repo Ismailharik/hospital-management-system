@@ -87,4 +87,23 @@ public class DoctorsServiceImpl implements DoctorsService {
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
         doctorRepository.delete(doctor);
     }
+
+    @Override
+    public DoctorDTO addImage(String id, MultipartFile file) throws IOException {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
+        String imagesLocation = System.getProperty("user.home") + "/hospital/images";
+        File f = new File(imagesLocation);
+        if (f.exists()) {
+            System.out.println(" directory already exist");
+        } else {
+            System.out.println("create directories required to store image");
+            f.mkdir();
+        }
+        String imageName = doctor.getEmail() + ".jpg";// while users mail is unique so we will stored their images by their mails
+        String imageSrc = imagesLocation + "/" + imageName;
+        doctor.setImage(imageSrc);
+        Files.write(Paths.get(imageSrc), file.getBytes());// add image in server
+        return mapper.doctorToDoctorDto(doctorRepository.save(doctor));
+    }
 }

@@ -82,6 +82,28 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
+    public PatientDTO addImage(String id, MultipartFile file) throws IOException {
+        Patient patient=patientsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Patient", "id", id));
+
+
+        String imagesLocation = System.getProperty("user.home") + "/hospital/images";
+        File f = new File(imagesLocation);
+        if (f.exists()) {
+            System.out.println(" directory already exist");
+        } else {
+            System.out.println("create directories required to store image");
+            f.mkdir();
+        }
+
+        String imageName = patient.getEmail() + ".jpg";// while users mail is unique so we will stored their images by their mails
+        String imageSrc = imagesLocation + "/" + imageName;
+        patient.setImage(imageSrc);
+        Files.write(Paths.get(imageSrc), file.getBytes());// add image in server
+        return mapper.patientToPatientDto(patientsRepository.save(patient));
+    }
+
+    @Override
     public PatientDTO updatePatient(String id, PatientDTO patientDTO) {
         Patient patient = patientsRepository.findById(id).orElseThrow(()->  new NotFoundException("Patient", "id",id));
         patient.setFirstname(patientDTO.getFirstname());

@@ -16,8 +16,10 @@ public interface PatientsService {
 
         PatientDTO getPatientByEmail(String email);
 
+        // the methods below should return Patient as they won't be used by the controller
         Patient addPatient(Patient patient,MultipartFile file) throws IOException;
         Patient addPatient(Patient patient) ;
+        PatientDTO addImage(String id,MultipartFile file) throws IOException;
 
         PatientDTO updatePatient(String id, PatientDTO patient) throws NotFoundException;
 
