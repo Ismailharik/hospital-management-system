@@ -13,6 +13,7 @@ public interface ReservationService {
     void deleteReservation(String id);
 
     List<Reservation> getReservationsOrderedByDate();
+    Reservation confirmReservation(String doctorId,String reservationId);
 
     List<Reservation> getReservationsByDoctorId(String doctorId);
 

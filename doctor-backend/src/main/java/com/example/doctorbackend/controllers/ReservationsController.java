@@ -66,6 +66,12 @@ public class ReservationsController {
         List<Reservation> reservations = reservationService.getReservationsByDoctorId(doctorId);
         return ResponseEntity.ok(reservations);
     }
+    @PostMapping("/confirmReservation")
+    public ResponseEntity<List<Reservation>> confirmReservation() {
+        List<Reservation> reservations = reservationService.getReservationsOrderedByDate();
+        return ResponseEntity.ok(reservations);
+    }
+
     @GetMapping("/filtredByPatient/{patientId}")
     public ResponseEntity<List<Reservation>> getReservationsByPatientId(@PathVariable String patientId){
         // get reservations specific to a doctor
