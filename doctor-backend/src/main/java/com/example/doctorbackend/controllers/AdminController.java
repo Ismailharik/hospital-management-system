@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -23,7 +25,7 @@ public class AdminController {
     public ResponseEntity<String> addDoctor(
             @RequestBody RegisterRequest request,
             @PathVariable String categoryId
-    ) {
+    ) throws IOException {
         request.setRole(Role.DOCTOR);
 
         adminService.addDoctor(request,categoryId);
