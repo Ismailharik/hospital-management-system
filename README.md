@@ -1,8 +1,9 @@
 # Health Connect
 
 
-<img  width="50%"  src="./images/logo.png">
-
+<div align="center" >
+ <img  src="./images/logo.png">
+</div>
 <p>Health Connect is a full-stack application that aims to connect doctors and patients in a seamless and efficient manner. The application provides a user-friendly interface for managing medical appointments, accessing patient records, and facilitating communication between doctors and patients. Health Connect is built using Flutter for the frontend, Spring Boot 3 for the backend, MongoDB for the database, and utilizes Spring Security for enhanced security features. The application is deployed using Docker, ensuring easy and scalable deployment options. It also leverages Jib for containerized builds, Zipkin for distributed tracing, and OpenAPI for API documentation.
 </p>
 
