@@ -1,9 +1,11 @@
 package com.example.doctorbackend.services;
 
+import com.example.doctorbackend.dto.ReservationDTO;
 import com.example.doctorbackend.entities.Doctor;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.entities.Reservation;
 import com.example.doctorbackend.error.NotFoundException;
+import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
 import com.example.doctorbackend.repositories.ReservationRepository;
@@ -20,9 +22,9 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private  final PatientRepository patientRepository;
-    private  final DoctorRepository doctorRepository;
-
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final Mapper mapper;
 
 
     @Override
@@ -37,27 +39,26 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation createReservation(Reservation reservation,String patientId,String doctorId) {
-        Patient patient=patientRepository.findById(patientId).orElseThrow(()->new NotFoundException("Patient","id",patientId));
-        Doctor doctor=doctorRepository.findById(doctorId).orElseThrow(()->new NotFoundException("Doctor","id",doctorId));
+    public ReservationDTO createReservation(ReservationDTO reservationDTO, String patientId, String doctorId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NotFoundException("Patient", "id", patientId));
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Doctor", "id", doctorId));
+        Reservation reservation = mapper.reservationDtoToReservation(reservationDTO);
         reservation.setPatient(patient);
         reservation.setDoctor(doctor);
         reservation.setReservationDate(new Date());
-        return reservationRepository.save(reservation);
+        return mapper.reservationToReservationDto(reservationRepository.save(reservation));
     }
 
     @Override
-    public Reservation updateReservation(String id, Reservation reservation) {
+    public ReservationDTO updateReservation(String id, ReservationDTO reservationDTO) {
         Reservation reservationToUpdate = reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reservation not found with id: " + id));
 
-        reservationToUpdate.setConfirmed(reservation.isConfirmed());
-        reservationToUpdate.setReservationDate(reservation.getReservationDate());
-        reservationToUpdate.setAppointmentDate(reservation.getAppointmentDate());
-        reservationToUpdate.setDoctor(reservation.getDoctor());
-        reservationToUpdate.setPatient(reservation.getPatient());
-
-        return reservationRepository.save(reservationToUpdate);
+        reservationToUpdate.setConfirmed(reservationDTO.isConfirmed());
+        reservationToUpdate.setReservationDate(reservationDTO.getReservationDate());
+        reservationToUpdate.setAppointmentDate(reservationDTO.getAppointmentDate());
+        reservationToUpdate.setComment(reservationDTO.getComment());
+        return mapper.reservationToReservationDto(reservationRepository.save(reservationToUpdate));
     }
 
     @Override
@@ -69,13 +70,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> getReservationsOrderedByDate() {
+    public List<ReservationDTO> getReservationsOrderedByDate() {
         List<Reservation> reservations = reservationRepository.findAll(Sort.by(Sort.Direction.DESC, "reservationDate"));
-        return reservations;
+        List<ReservationDTO> reservationDTOS = reservations.stream().map(
+                reservation -> mapper.reservationToReservationDto(reservation)
+        ).toList();
+        return reservationDTOS;
     }
 
     @Override
-    public Reservation confirmReservation(String doctorId, String reservationId) {
+    public ReservationDTO confirmReservation(String doctorId, String reservationId) {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", doctorId));
 
@@ -83,18 +87,23 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(() -> new NotFoundException("Reservation", "id", reservationId));
 
         reservation.setConfirmed(true);
-        return reservationRepository.save(reservation);
+        return mapper.reservationToReservationDto(reservationRepository.save(reservation));
     }
 
     @Override
-    public List<Reservation> getReservationsByDoctorId(String doctorId) {
-        List<Reservation> reservations = reservationRepository.findByDoctorId(doctorId);
+    public List<ReservationDTO> getReservationsByDoctorId(String doctorId) {
+        List<ReservationDTO> reservations = reservationRepository.findByDoctorId(doctorId)
+                .stream().map(reservation -> mapper.reservationToReservationDto(reservation))
+                .toList();
         return reservations;
     }
 
     @Override
-    public List<Reservation> getReservationsByPatientId(String patientId) {
-        List<Reservation> reservations = reservationRepository.findByPatientId(patientId);
+    public List<ReservationDTO> getReservationsByPatientId(String patientId) {
+        // normaly I should Use other response
+        List<ReservationDTO> reservations = reservationRepository.findByPatientId(patientId)
+                .stream().map(reservation -> mapper.reservationToReservationDto(reservation))
+                .toList();
         return reservations;
     }
 }

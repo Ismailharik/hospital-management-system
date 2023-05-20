@@ -3,6 +3,7 @@ package com.example.doctorbackend.dto;
 
 import com.example.doctorbackend.user.Role;
 import com.example.doctorbackend.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,13 @@ public class DoctorDTO {
     private String phone;
     private String image;
     private String email;
-    private String password;
     private Role role;
     private String comment;
     private String speciality;
     private Double rating;
+    // if you don't want to use jsonIgnore you should you use DoctorResponse and DoctorRequest
+    @JsonIgnore
+    private String password;
 
 }
 

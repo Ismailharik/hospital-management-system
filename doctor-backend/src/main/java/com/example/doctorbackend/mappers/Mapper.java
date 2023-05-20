@@ -15,7 +15,6 @@ public class Mapper {
     public Reservation reservationDtoToReservation(ReservationDTO reservationDTO) {
         Reservation reservation = new Reservation();
         BeanUtils.copyProperties(reservationDTO,reservation);
-        reservation.setPatient(this.patientDtoToPatient(reservationDTO.getPatientDTO()));
         return reservation;
     }
 
@@ -23,6 +22,8 @@ public class Mapper {
         ReservationDTO reservationDTO = new ReservationDTO();
         BeanUtils.copyProperties(reservation,reservationDTO);
         reservationDTO.setPatientDTO(this.patientToPatientDto(reservation.getPatient()));
+        reservationDTO.setDoctorDTO(this.doctorToDoctorDto(reservation.getDoctor()));
+
         return reservationDTO;
     }
 

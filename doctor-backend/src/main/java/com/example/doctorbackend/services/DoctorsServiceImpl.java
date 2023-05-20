@@ -1,8 +1,10 @@
 package com.example.doctorbackend.services;
 
+import com.example.doctorbackend.dto.DoctorDTO;
 import com.example.doctorbackend.entities.Doctor;
 import com.example.doctorbackend.error.ConflictException;
 import com.example.doctorbackend.error.NotFoundException;
+import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.user.Role;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,22 +25,24 @@ public class DoctorsServiceImpl implements DoctorsService {
 
     private final DoctorRepository doctorRepository;
 
+    private final Mapper mapper;
 
     @Override
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findByRole(Role.DOCTOR);
+    public List<DoctorDTO> getAllDoctors() {
+        return doctorRepository.findByRole(Role.DOCTOR).stream().map(doctor -> mapper.doctorToDoctorDto(doctor)).toList();
     }
 
     @Override
-    public Doctor getDoctorById(String id) {
-        return doctorRepository.findById(id)
+    public DoctorDTO getDoctorById(String id) {
+        Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
+        return mapper.doctorToDoctorDto(doctor);
     }
 
     @Override
     public Doctor createDoctor(Doctor doctor, MultipartFile file) throws IOException {
-
-        if (doctorRepository.findByEmail(doctor .getEmail()).isPresent()) {
+        Optional<Doctor> doctorFound = doctorRepository.findByEmail(doctor.getEmail());
+        if (doctorFound.isPresent()) {
             throw new ConflictException("Email already exist, please login or try other one");
         }
         String imagesLocation = System.getProperty("user.home") + "/hospital/images";
@@ -57,14 +62,14 @@ public class DoctorsServiceImpl implements DoctorsService {
 
 
     @Override
-    public Doctor updateDoctor(String id, Doctor doctor) {
+    public DoctorDTO updateDoctor(String id, DoctorDTO doctor) {
         Doctor existingDoctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
         existingDoctor.setFirstname(doctor.getFirstname());
         existingDoctor.setComment(doctor.getComment());
         existingDoctor.setPhone(doctor.getPhone());
         existingDoctor.setImage(doctor.getImage());
-        return doctorRepository.save(existingDoctor);
+        return mapper.doctorToDoctorDto(doctorRepository.save(existingDoctor));
     }
 
     @Override

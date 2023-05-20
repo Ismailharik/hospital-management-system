@@ -14,7 +14,10 @@ import java.util.Date;
 public class ReservationDTO {
     private String id;
     private PatientDTO patientDTO;
+    private DoctorDTO doctorDTO;
     private Date appointmentDate;
     private Date reservationDate;
     private boolean confirmed;
+    private String comment;
+
 }

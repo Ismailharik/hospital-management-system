@@ -1,8 +1,10 @@
 package com.example.doctorbackend.services;
 
+import com.example.doctorbackend.dto.PatientDTO;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.error.ConflictException;
 import com.example.doctorbackend.error.NotFoundException;
+import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.repositories.PatientRepository;
 import com.example.doctorbackend.user.Role;
 import lombok.AllArgsConstructor;
@@ -23,32 +25,34 @@ import java.util.Optional;
 public class PatientsServiceImpl implements PatientsService {
 
     private final PatientRepository patientsRepository;
+    private  final Mapper mapper;
 
     @Override
-    public List<Patient> getAllPatients() {
-        return patientsRepository.findByRole(Role.USER);
+    public List<PatientDTO> getAllPatients() {
+        return patientsRepository.findByRole(Role.USER).stream().map(patient -> mapper.patientToPatientDto(patient)).toList();
     }
 
     @Override
-    public Patient getPatientById(String id) throws NotFoundException {
-        return patientsRepository.findById(id)
+    public PatientDTO getPatientById(String id) throws NotFoundException {
+        Patient patient=patientsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Patient", "id", id));
+        return mapper.patientToPatientDto(patient);
     }
 
     @Override
-    public Patient getPatientByEmail(String email) {
+    public PatientDTO getPatientByEmail(String email) {
         Optional<Patient> patient = patientsRepository.findByEmail(email);
         if (patient.isEmpty()) {
 
             throw new NotFoundException("Patient", "email", email);
         }
-        return patient.get();
+        return mapper.patientToPatientDto(patient.get());
     }
 
     @Override
     public Patient addPatient(Patient patient, MultipartFile file) throws IOException {
-
-        if (patientsRepository.findByEmail(patient.getEmail()).isPresent()) {
+        Optional<Patient> patientFound = patientsRepository.findByEmail(patient.getEmail());
+        if (patientFound.isPresent()) {
             throw new ConflictException("Email already exist, please login or try other one");
         }
         String imagesLocation = System.getProperty("user.home") + "/hospital/images";
@@ -69,26 +73,23 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
-    public Patient updatePatient(String id, Patient patientDetails) {
-        Patient patient = getPatientById(id);
-        patient.setFirstname(patientDetails.getFirstname());
-        patient.setPhone(patientDetails.getPhone());
-
+    public PatientDTO updatePatient(String id, PatientDTO patientDTO) {
+        Patient patient = patientsRepository.findById(id).orElseThrow(()->  new NotFoundException("Patient", "id",id));
+        patient.setFirstname(patientDTO.getFirstname());
+        patient.setPhone(patientDTO.getPhone());
+        patient.setImage(patient.getImage());
         // he should not update his email
         // what if he updates his email to an existing email
         // then he will authenticate by other account
         // patient.setEmail(patientDetails.getEmail());
 
 
-        return patientsRepository.save(patient);
+        return mapper.patientToPatientDto(patientsRepository.save(patient));
     }
 
     @Override
     public void deletePatient(String id) {
-        Patient patient = getPatientById(id);
-        if (patient == null) {
-            throw new NotFoundException("Patient", "id", id);
-        }
+        Patient patient = patientsRepository.findById(id).orElseThrow(()->  new NotFoundException("Patient", "id",id));
         patientsRepository.delete(patient);
     }
 

@@ -4,6 +4,7 @@ import com.example.doctorbackend.config.JwtService;
 import com.example.doctorbackend.entities.Admin;
 import com.example.doctorbackend.entities.Doctor;
 import com.example.doctorbackend.entities.Patient;
+import com.example.doctorbackend.error.NotFoundException;
 import com.example.doctorbackend.repositories.AdminRepository;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
@@ -40,6 +41,7 @@ public class AuthenticationService {
     private final DoctorsService doctorsService;
     private final DoctorRepository doctorRepository;
     private final AdminRepository adminRepository;
+    private final PatientRepository patientRepository;
 //    private final UserRepository userRepository;
 
 
@@ -124,13 +126,14 @@ public class AuthenticationService {
         User user=null;
         if (request.getRole().equals(Role.ADMIN)){
             user = adminRepository.findByEmail(request.getEmail())
-                    .orElseThrow();
+                    .orElseThrow(()->new  NotFoundException("ADMIN", "email", request.getEmail()));
 
         }else if(request.getRole().equals(Role.DOCTOR)){
             user = doctorRepository.findByEmail(request.getEmail())
-                    .orElseThrow();
+                    .orElseThrow(()->new  NotFoundException("Patient", "email", request.getEmail()));
         }else if(request.getRole().equals(Role.USER)){
-             user = patientsService.getPatientByEmail(request.getEmail());
+             user = patientRepository.findByEmail(request.getEmail())
+                     .orElseThrow(()->new  NotFoundException("PATIENT", "email", request.getEmail()));
 
         }
         System.out.println(user.toString());

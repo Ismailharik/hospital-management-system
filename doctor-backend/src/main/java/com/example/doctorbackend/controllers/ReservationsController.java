@@ -42,17 +42,17 @@ public class ReservationsController {
 
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation,
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservation,
                                                          @RequestParam String patientId,
                                                          @RequestParam String doctorId)
      {
-        Reservation createdReservation = reservationService.createReservation(reservation,patientId,doctorId);
+        ReservationDTO createdReservation = reservationService.createReservation(reservation,patientId,doctorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable String id, @RequestBody Reservation reservation) {
-        Reservation updatedReservation = reservationService.updateReservation(id, reservation);
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable String id, @RequestBody ReservationDTO reservation) {
+        ReservationDTO updatedReservation = reservationService.updateReservation(id, reservation);
         return ResponseEntity.ok(updatedReservation);
     }
 
@@ -62,25 +62,25 @@ public class ReservationsController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/orderedByDate")
-    public ResponseEntity<List<Reservation>> getReservationsOrderedByDate() {
-        List<Reservation> reservations = reservationService.getReservationsOrderedByDate();
+    public ResponseEntity<List<ReservationDTO>> getReservationsOrderedByDate() {
+        List<ReservationDTO> reservations = reservationService.getReservationsOrderedByDate();
         return ResponseEntity.ok(reservations);
     }
     @GetMapping("/filteredByDoctor/{doctorId}")
-    public ResponseEntity<List<Reservation>> getReservationsByDoctorId(@PathVariable String doctorId){
+    public ResponseEntity<List<ReservationDTO>> getReservationsByDoctorId(@PathVariable String doctorId){
         // get reservations specific to a doctor
-        List<Reservation> reservations = reservationService.getReservationsByDoctorId(doctorId);
+        List<ReservationDTO> reservations = reservationService.getReservationsByDoctorId(doctorId);
         return ResponseEntity.ok(reservations);
     }
     @PutMapping("/confirm/{doctorId}/{reservationId}")
-    public ResponseEntity<Reservation> confirmReservation(@PathVariable String doctorId, @PathVariable String reservationId) {
-        Reservation confirmedReservation = reservationService.confirmReservation(doctorId, reservationId);
+    public ResponseEntity<ReservationDTO> confirmReservation(@PathVariable String doctorId, @PathVariable String reservationId) {
+        ReservationDTO confirmedReservation = reservationService.confirmReservation(doctorId, reservationId);
         return ResponseEntity.ok(confirmedReservation);
     }
     @GetMapping("/filteredByPatient/{patientId}")
-    public ResponseEntity<List<Reservation>> getReservationsByPatientId(@PathVariable String patientId){
+    public ResponseEntity<List<ReservationDTO>> getReservationsByPatientId(@PathVariable String patientId){
         // get reservations specific to a doctor
-        List<Reservation> reservations = reservationService.getReservationsByPatientId(patientId);
+        List<ReservationDTO> reservations = reservationService.getReservationsByPatientId(patientId);
         return ResponseEntity.ok(reservations);
     }
 }

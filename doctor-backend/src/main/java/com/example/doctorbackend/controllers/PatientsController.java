@@ -1,7 +1,9 @@
 package com.example.doctorbackend.controllers;
 
+import com.example.doctorbackend.dto.PatientDTO;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.error.NotFoundException;
+import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.services.PatientsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -21,32 +23,32 @@ public class PatientsController {
     private final PatientsService patientsService;
 
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatients() {
-        List<Patient> patients = patientsService.getAllPatients();
+    public ResponseEntity<List<PatientDTO>> getAllPatients() {
+        List<PatientDTO> patients = patientsService.getAllPatients();
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable String id) throws NotFoundException {
-        Patient patient = patientsService.getPatientById(id);
+    public ResponseEntity<PatientDTO> getPatientById(@PathVariable String id) throws NotFoundException {
+        PatientDTO patient = patientsService.getPatientById(id);
         return ResponseEntity.ok(patient);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<Patient> getPatientByEmail(@Valid @Email @PathVariable String email) {
-        Patient patient = patientsService.getPatientByEmail(email);
+    public ResponseEntity<PatientDTO> getPatientByEmail(@Valid @Email @PathVariable String email) {
+        PatientDTO patient = patientsService.getPatientByEmail(email);
             return ResponseEntity.ok(patient);
     }
 
-    @PostMapping
-    public ResponseEntity<Patient> createPatient( @ModelAttribute Patient patient,@RequestParam("file") MultipartFile file) throws IOException {
-        Patient createdPatient = patientsService.addPatient(patient,file);
-        return new ResponseEntity<>(createdPatient, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<PatientDTO> createPatient( @ModelAttribute PatientDTO patient,@RequestParam("file") MultipartFile file) throws IOException {
+//        PatientDTO createdPatient = patientsService.addPatient(patient,file);
+//        return new ResponseEntity<>(createdPatient, HttpStatus.CREATED);
+//    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable String id,@Valid @RequestBody Patient patient) throws NotFoundException {
-        Patient updatedPatient = patientsService.updatePatient(id, patient);
+    public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id,@Valid @RequestBody PatientDTO patient) throws NotFoundException {
+        PatientDTO updatedPatient = patientsService.updatePatient(id, patient);
         return ResponseEntity.ok(updatedPatient);
     }
 

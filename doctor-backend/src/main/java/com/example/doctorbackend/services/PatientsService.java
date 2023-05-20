@@ -1,5 +1,6 @@
 package com.example.doctorbackend.services;
 
+import com.example.doctorbackend.dto.PatientDTO;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.error.NotFoundException;
 import org.springframework.security.core.parameters.P;
@@ -9,15 +10,15 @@ import java.io.IOException;
 import java.util.List;
 public interface PatientsService {
 
-        List<Patient> getAllPatients();
+        List<PatientDTO> getAllPatients();
 
-        Patient getPatientById(String id) throws NotFoundException;
+        PatientDTO getPatientById(String id) throws NotFoundException;
 
-        Patient getPatientByEmail(String email);
+        PatientDTO getPatientByEmail(String email);
 
         Patient addPatient(Patient patient,MultipartFile file) throws IOException;
 
-        Patient updatePatient(String id, Patient patient) throws NotFoundException;
+        PatientDTO updatePatient(String id, PatientDTO patient) throws NotFoundException;
 
         void deletePatient(String id) throws NotFoundException;
 }
