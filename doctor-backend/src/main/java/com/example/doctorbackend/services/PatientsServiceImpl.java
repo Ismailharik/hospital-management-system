@@ -73,6 +73,15 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
+    public Patient addPatient(Patient patient) {//add Patient without image
+        Optional<Patient> patientFound = patientsRepository.findByEmail(patient.getEmail());
+        if (patientFound.isPresent()) {
+            throw new ConflictException("Email already exist, please login or try other one");
+        }
+        return patientsRepository.save(patient);
+    }
+
+    @Override
     public PatientDTO updatePatient(String id, PatientDTO patientDTO) {
         Patient patient = patientsRepository.findById(id).orElseThrow(()->  new NotFoundException("Patient", "id",id));
         patient.setFirstname(patientDTO.getFirstname());

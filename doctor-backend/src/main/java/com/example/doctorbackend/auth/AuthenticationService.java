@@ -43,7 +43,9 @@ public class AuthenticationService {
     private final AdminRepository adminRepository;
     private final PatientRepository patientRepository;
 //    private final UserRepository userRepository;
-
+    public AuthenticationResponse register(RegisterRequest request) throws IOException {
+        return this.register(request,null);
+    }
 
     public AuthenticationResponse register(RegisterRequest request, MultipartFile file) throws IOException {
 
@@ -62,7 +64,12 @@ public class AuthenticationService {
             patient.setPassword(passwordEncoder.encode(request.getPassword()));
             patient.setPhone(request.getPhone());
             patient.setRole(request.getRole());
-            Patient savedPatient=patientsService.addPatient(patient,file);
+            Patient savedPatient;
+            if (file==null){
+                savedPatient=patientsService.addPatient(patient);
+            }else{
+                savedPatient=patientsService.addPatient(patient,file);
+            }
             var jwtToken = jwtService.generateToken(patient);
             var refreshToken = jwtService.generateRefreshToken(patient);
             saveUserToken(savedPatient, jwtToken);
@@ -79,7 +86,12 @@ public class AuthenticationService {
             doctor.setPhone(request.getPhone());
             doctor.setRole(request.getRole());
             doctor.setPhone(request.getPhone());
-            Doctor savedDoctor=doctorsService.createDoctor(doctor,file);
+            Doctor savedDoctor;
+            if (file==null){
+                savedDoctor=doctorsService.createDoctor(doctor);
+            }else{
+                savedDoctor=doctorsService.createDoctor(doctor,file);
+            }
             var jwtToken = jwtService.generateToken(doctor);
             var refreshToken = jwtService.generateRefreshToken(doctor);
             saveUserToken(savedDoctor, jwtToken);

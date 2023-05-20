@@ -17,6 +17,7 @@ public interface PatientsService {
         PatientDTO getPatientByEmail(String email);
 
         Patient addPatient(Patient patient,MultipartFile file) throws IOException;
+        Patient addPatient(Patient patient) ;
 
         PatientDTO updatePatient(String id, PatientDTO patient) throws NotFoundException;
 

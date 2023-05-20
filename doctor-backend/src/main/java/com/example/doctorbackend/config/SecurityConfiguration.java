@@ -53,6 +53,7 @@ public class SecurityConfiguration {
             .requestMatchers(POST,"/api/v1/doctors/**").hasAnyRole(ADMIN.name(), DOCTOR.name())
             .requestMatchers(PUT,"/api/v1/doctors/**").hasAnyRole(ADMIN.name(), DOCTOR.name())
             .requestMatchers(DELETE,"/api/v1/doctors/**").hasAnyRole(ADMIN.name(), DOCTOR.name())
+            .requestMatchers(GET,"/api/v1/patients/**").hasAnyRole(ADMIN.name(),DOCTOR.name())
 
             // only admin can add new category of doctors
             .requestMatchers(DELETE,"/api/v1/categories/**").hasAnyRole(ADMIN.name())

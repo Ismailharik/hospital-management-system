@@ -36,4 +36,14 @@ public class AdminController {
 
         return ResponseEntity.ok("Doctor user created successfully.");
     }
+    @PostMapping("/add_doctor/v2/{categoryId}")
+    public ResponseEntity<String> addDoctor(
+            @RequestBody RegisterRequest request,
+            @PathVariable String categoryId
+    ) throws IOException {
+        request.setRole(Role.DOCTOR);
+        adminService.addDoctor(request,categoryId,null);
+
+        return ResponseEntity.ok("Doctor user created successfully.");
+    }
 }

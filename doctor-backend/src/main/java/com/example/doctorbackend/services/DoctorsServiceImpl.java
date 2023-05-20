@@ -60,6 +60,15 @@ public class DoctorsServiceImpl implements DoctorsService {
         return doctorRepository.save(doctor);
     }
 
+    @Override
+    public Doctor createDoctor(Doctor doctor) {
+        Optional<Doctor> doctorFound = doctorRepository.findByEmail(doctor.getEmail());
+        if (doctorFound.isPresent()) {
+            throw new ConflictException("Email already exist, please login or try other one");
+        }
+        return doctorRepository.save(doctor);
+    }
+
 
     @Override
     public DoctorDTO updateDoctor(String id, DoctorDTO doctor) {

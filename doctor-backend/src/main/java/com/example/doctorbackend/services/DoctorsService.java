@@ -15,6 +15,7 @@ public interface DoctorsService {
     // this method will be used by register from admin endpoint
 
     Doctor createDoctor(Doctor doctor, MultipartFile file) throws IOException;
+    Doctor createDoctor(Doctor doctor) ;
 
     DoctorDTO updateDoctor(String id, DoctorDTO doctorDTO);
 
