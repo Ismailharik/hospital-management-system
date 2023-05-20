@@ -75,6 +75,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Reservation confirmReservation(String doctorId, String reservationId) {
+        Doctor doctor =doctorRepository.findById(doctorId).orElseThrow(()->new NotFoundException("Doctor","id",doctorId));
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(()->new NotFoundException("Reservation","id",doctorId));
+        if (reservation!=null && doctor!=null){
+            reservation.setConfirmed(true);
+        }
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
     public List<Reservation> getReservationsByDoctorId(String doctorId) {
         List<Reservation> reservations = reservationRepository.findByDoctorId(doctorId);
         return reservations;
