@@ -11,6 +11,8 @@ import com.example.doctorbackend.user.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 @AllArgsConstructor
 public class AdminService {
@@ -20,10 +22,10 @@ public class AdminService {
     private final DoctorsService doctorsService;
 
 
-    public void addDoctor(RegisterRequest request,String categoryId){
+    public void addDoctor(RegisterRequest request,String categoryId) throws IOException {
         // save doctor as user for authentication
         request.setRole(Role.DOCTOR);
-        this.authenticationService.register(request);
+        this.authenticationService.register(request,null);
         // save doctor on user cluster for authentication ,then in doctors cluster
         Doctor doctor = new Doctor();
         doctor.setEmail(request.getEmail());

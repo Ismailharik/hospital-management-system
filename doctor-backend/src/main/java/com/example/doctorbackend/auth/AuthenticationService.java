@@ -6,6 +6,7 @@ import com.example.doctorbackend.entities.Doctor;
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.repositories.AdminRepository;
 import com.example.doctorbackend.repositories.DoctorRepository;
+import com.example.doctorbackend.repositories.PatientRepository;
 import com.example.doctorbackend.services.DoctorsService;
 import com.example.doctorbackend.services.PatientsService;
 import com.example.doctorbackend.token.Token;
@@ -23,6 +24,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -37,10 +39,11 @@ public class AuthenticationService {
     private final PatientsService patientsService;
     private final DoctorsService doctorsService;
     private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
     private final AdminRepository adminRepository;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request, MultipartFile file) throws IOException {
 
 //        var user = User.builder()
 //                .firstname(request.getFirstname())
@@ -56,7 +59,7 @@ public class AuthenticationService {
             patient.setPassword(passwordEncoder.encode(request.getPassword()));
             patient.setPhone(request.getPhone());
             patient.setRole(request.getRole());
-            Patient savedPatient=patientsService.addPatient(patient);
+            Patient savedPatient=patientsService.addPatient(patient,file);
             var jwtToken = jwtService.generateToken(patient);
             var refreshToken = jwtService.generateRefreshToken(patient);
             saveUserToken(savedPatient, jwtToken);
@@ -119,6 +122,7 @@ public class AuthenticationService {
         if (request.getRole().equals(Role.ADMIN)){
             user = adminRepository.findByEmail(request.getEmail())
                     .orElseThrow();
+
         }else if(request.getRole().equals(Role.DOCTOR)){
             user = doctorRepository.findByEmail(request.getEmail())
                     .orElseThrow();
@@ -126,7 +130,7 @@ public class AuthenticationService {
              user = patientsService.getPatientByEmail(request.getEmail());
 
         }
-
+        System.out.println(user.toString());
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

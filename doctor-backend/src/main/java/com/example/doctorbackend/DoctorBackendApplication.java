@@ -47,7 +47,7 @@ public class DoctorBackendApplication {
                     .password("password")
                     .role(ADMIN)
                     .build();
-            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+            System.out.println("Admin token: " + service.register(admin,null).getAccessToken());
         };
     }
 

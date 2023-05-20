@@ -1,16 +1,14 @@
 package com.example.doctorbackend.auth;
 
 import com.example.doctorbackend.user.Role;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -21,11 +19,12 @@ public class AuthenticationController {
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(
-      @RequestBody RegisterRequest request
-  ) {
+      @ModelAttribute RegisterRequest request,
+      @RequestParam("file") MultipartFile file
+  ) throws IOException {
     // I won't let anyone have any  role
     request.setRole(Role.USER);// only users can be registered
-    return ResponseEntity.ok(service.register(request));
+    return ResponseEntity.ok(service.register(request,file));
   }
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(

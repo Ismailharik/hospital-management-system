@@ -1,6 +1,8 @@
 package com.example.doctorbackend.user;
 
 import com.example.doctorbackend.token.Token;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,10 +44,12 @@ public abstract class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @DBRef
+  @DBRef(lazy = true)
   private List<Token> tokens;
 
+
   @Override
+  @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return role.getAuthorities();
   }

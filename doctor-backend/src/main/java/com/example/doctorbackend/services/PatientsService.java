@@ -2,7 +2,10 @@ package com.example.doctorbackend.services;
 
 import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.error.NotFoundException;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 public interface PatientsService {
 
@@ -12,7 +15,7 @@ public interface PatientsService {
 
         Patient getPatientByEmail(String email);
 
-        Patient addPatient(Patient patient);
+        Patient addPatient(Patient patient,MultipartFile file) throws IOException;
 
         Patient updatePatient(String id, Patient patient) throws NotFoundException;
 
