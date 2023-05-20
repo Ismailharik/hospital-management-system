@@ -15,7 +15,11 @@ import com.example.doctorbackend.token.TokenRepository;
 import com.example.doctorbackend.token.TokenType;
 import com.example.doctorbackend.user.Role;
 import com.example.doctorbackend.user.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -160,34 +164,41 @@ public class AuthenticationService {
             token.setExpired(true);
             token.setRevoked(true);
         });
-        tokenRepository.saveAll(validUserTokens);
+//        tokenRepository.saveAll(validUserTokens);
+        tokenRepository.deleteAll(validUserTokens);
+        /*
+        * In the course you have followed, they set tokens to false as a way to handle reservations. However,
+        *  in my case, I have decided to delete the tokens instead.
+        * This is because keeping the tokens in the database would only occupy space without serving any purpose.
+        * */
     }
 
-//    public void refreshToken(
-//            HttpServletRequest request,
-//            HttpServletResponse response
-//    ) throws IOException {
-//        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        final String refreshToken;
-//        final String userEmail;
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            return;
-//        }
-//        refreshToken = authHeader.substring(7);
-//        userEmail = jwtService.extractUsername(refreshToken);
-//        if (userEmail != null) {
-//            var user = this.repository.findByEmail(userEmail)
-//                    .orElseThrow();
-//            if (jwtService.isTokenValid(refreshToken, user)) {
-//                var accessToken = jwtService.generateToken(user);
-//                revokeAllUserTokens(user);
-//                saveUserToken(user, accessToken);
-//                var authResponse = AuthenticationResponse.builder()
-//                        .accessToken(accessToken)
-//                        .refreshToken(refreshToken)
-//                        .build();
-//                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-//            }
-//        }
-//    }
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return;
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        if (userEmail != null) {
+            // you can use every repo since all of them below to people cluster
+            var user = this.adminRepository.findByEmail(userEmail)
+                    .orElseThrow();
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                var accessToken = jwtService.generateToken(user);
+                revokeAllUserTokens(user);
+                saveUserToken(user, accessToken);
+                var authResponse = AuthenticationResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            }
+        }
+    }
 }

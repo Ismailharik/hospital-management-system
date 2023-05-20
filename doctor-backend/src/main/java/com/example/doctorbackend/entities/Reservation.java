@@ -24,6 +24,7 @@ public class Reservation {
     @DBRef
     @Field("patient_id")
     private Patient patient;
+    private String comment;
     private Date appointmentDate;
     private Date reservationDate;
     private boolean confirmed;// reservation will be confirmed by the doctor

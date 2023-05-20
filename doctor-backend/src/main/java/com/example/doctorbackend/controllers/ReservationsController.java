@@ -60,19 +60,18 @@ public class ReservationsController {
         List<Reservation> reservations = reservationService.getReservationsOrderedByDate();
         return ResponseEntity.ok(reservations);
     }
-    @GetMapping("/filtredByDoctor/{doctorId}")
+    @GetMapping("/filteredByDoctor/{doctorId}")
     public ResponseEntity<List<Reservation>> getReservationsByDoctorId(@PathVariable String doctorId){
         // get reservations specific to a doctor
         List<Reservation> reservations = reservationService.getReservationsByDoctorId(doctorId);
         return ResponseEntity.ok(reservations);
     }
-    @PostMapping("/confirmReservation")
-    public ResponseEntity<List<Reservation>> confirmReservation() {
-        List<Reservation> reservations = reservationService.getReservationsOrderedByDate();
-        return ResponseEntity.ok(reservations);
+    @PutMapping("/confirm/{doctorId}/{reservationId}")
+    public ResponseEntity<Reservation> confirmReservation(@PathVariable String doctorId, @PathVariable String reservationId) {
+        Reservation confirmedReservation = reservationService.confirmReservation(doctorId, reservationId);
+        return ResponseEntity.ok(confirmedReservation);
     }
-
-    @GetMapping("/filtredByPatient/{patientId}")
+    @GetMapping("/filteredByPatient/{patientId}")
     public ResponseEntity<List<Reservation>> getReservationsByPatientId(@PathVariable String patientId){
         // get reservations specific to a doctor
         List<Reservation> reservations = reservationService.getReservationsByPatientId(patientId);
