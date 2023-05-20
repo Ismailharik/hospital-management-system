@@ -1,13 +1,13 @@
 # Health Connect
-#### MediConnect: An Integrated Healthcare Platform with Spring Boot and Flutter
+### MediConnect: Health management System Platform with Spring Boot and Flutter
+
 <div align="center">
-<img  height="45" width="55"  src="./tools-icons/vault-icon.png">
+<img  width="80" src="./images/springboot.png">
+<img  width="100" src="./images/flutter.png">
 <img  width="80" src="./images/zipkin.png">
-<img  width="80" src="./images/Docker-Logo-2013.png">
-<img  width="80" src="./images/docker-compose-logo.jpg">
-<img  width="55" src="./images/mongodb.png">
-<img  width="55" src="./images/zipkin-logo.png">
-<img  width="100" src="./images/springboot.png">
+<img  width="80" src="./images/docker.png">
+<img  width="70" src="./images/docker-compose.png">
+<img  width="80" src="./images/mongodb.png">
 </div>
 <div align="center" >
  <img  width="35%" src="./images/logo.png">
