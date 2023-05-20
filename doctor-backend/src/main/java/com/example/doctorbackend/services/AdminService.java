@@ -27,8 +27,8 @@ public class AdminService {
         // save doctor on user cluster for authentication ,then in doctors cluster
         Doctor doctor = new Doctor();
         doctor.setEmail(request.getEmail());
-        doctor.setSpeciality(request.getSpeciality());
-        doctor.setName(request.getFirstname()+" "+request.getLastname());
+        doctor.setComment(request.getComment());
+        doctor.setFirstname(request.getFirstname()+" "+request.getLastname());
         Doctor savedDoctor = doctorsService.createDoctor(doctor);
 
         Category category= categoryService.getCategoryById(categoryId);

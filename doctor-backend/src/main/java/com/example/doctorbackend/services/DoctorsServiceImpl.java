@@ -40,8 +40,8 @@ public class DoctorsServiceImpl implements DoctorsService {
     public Doctor updateDoctor(String id, Doctor doctor) {
         Doctor existingDoctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
-        existingDoctor.setName(doctor.getName());
-        existingDoctor.setSpeciality(doctor.getSpeciality());
+        existingDoctor.setFirstname(doctor.getFirstname());
+        existingDoctor.setComment(doctor.getComment());
         existingDoctor.setPhone(doctor.getPhone());
         existingDoctor.setImage(doctor.getImage());
         return doctorRepository.save(existingDoctor);

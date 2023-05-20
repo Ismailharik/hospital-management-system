@@ -7,7 +7,7 @@ spring:
     mongodb:
       port: ${MONGO_PORT:27017}
       host: ${MONGO_HOST:localhost}
-      database: ${MONGO_DATABASE:hospital-db}
+      database: ${MONGO_DATABASE:hospital-db-v2}
       repositories:
         enabled: 'true'
   sql:
