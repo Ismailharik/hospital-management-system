@@ -1,7 +1,9 @@
 package com.example.doctorbackend.controllers;
 
+import com.example.doctorbackend.dto.ReservationDTO;
 import com.example.doctorbackend.entities.Reservation;
 import com.example.doctorbackend.error.NotFoundException;
+import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.services.ReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/reservations")
@@ -16,12 +19,15 @@ import java.util.List;
 public class ReservationsController {
 
     private final ReservationService reservationService;
+    private Mapper mapper;
 
 
 
     @GetMapping
-    public List<Reservation> getAllReservations() {
-        return reservationService.getAllReservations();
+    public List<ReservationDTO> getAllReservations() {
+
+        List<ReservationDTO> reservationsDto = reservationService.getAllReservations().stream().map(reservation -> mapper.reservationToReservationDto(reservation)).collect(Collectors.toList());
+        return reservationsDto;
     }
 
     @GetMapping("/{id}")

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PatientDto {
+public class PatientDTO{
     private String id;
     private String firstname;
     private String lastname;

@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ReservationDTO {
     private String id;
-    private Patient patient;
+    private PatientDTO patientDTO;
     private Date appointmentDate;
     private Date reservationDate;
     private boolean confirmed;
