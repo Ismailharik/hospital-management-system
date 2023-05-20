@@ -35,10 +35,10 @@ public class DoctorsControllerTest {
 
         Doctor doctor = new Doctor();
         doctor.setEmail("doctortest@gmail.com");
-        doctor.setName("doctortest");
-        doctor.setSpeciality("diabetes");
+        doctor.setFirstname("doctortest");
+        doctor.setComment("comment");
 
-        Mockito.when(doctorsService.createDoctor(Mockito.any(Doctor.class))).thenReturn(doctor);
+        Mockito.when(doctorsService.createDoctor(Mockito.any(Doctor.class),Mockito.any())).thenReturn(doctor);
 
         mockMvc.perform(
                         post("/api/v1/doctors")

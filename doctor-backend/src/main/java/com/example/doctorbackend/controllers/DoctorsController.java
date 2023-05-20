@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,11 +35,12 @@ public class DoctorsController {
         return new ResponseEntity<>(doctor, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Doctor> createDoctor( @Valid @RequestBody Doctor doctor) {
-        Doctor createdDoctor = doctorService.createDoctor(doctor);
-        return new ResponseEntity<>(createdDoctor, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<Doctor> createDoctor(@Valid @ModelAttribute Doctor doctor,
+//                                               @RequestParam MultipartFile file) {
+//        Doctor createdDoctor = doctorService.createDoctor(doctor);
+//        return new ResponseEntity<>(createdDoctor, HttpStatus.CREATED);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable("id") String id, @RequestBody Doctor doctor) {
