@@ -1,16 +1,13 @@
-package com.example.doctorbackend.user;
+package com.example.doctorbackend.entities;
 
-import com.example.doctorbackend.token.Token;
+import com.example.doctorbackend.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +23,6 @@ import java.util.List;
 @Table(name = "_user")
 
 public abstract class User implements UserDetails {
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private String id;
@@ -39,7 +35,6 @@ public abstract class User implements UserDetails {
   @Column(unique = true)
   private String email;
   private String password;
-
   @Enumerated(EnumType.STRING)
   private Role role;
 

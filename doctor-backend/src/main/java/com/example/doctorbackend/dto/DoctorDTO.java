@@ -1,8 +1,7 @@
 package com.example.doctorbackend.dto;
 
 
-import com.example.doctorbackend.user.Role;
-import com.example.doctorbackend.user.User;
+import com.example.doctorbackend.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.example.doctorbackend.auth;
 
-import com.example.doctorbackend.user.Role;
+import com.example.doctorbackend.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.example.doctorbackend.auth;
 
-import com.example.doctorbackend.user.Role;
+import com.example.doctorbackend.enums.Role;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

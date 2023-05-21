@@ -6,7 +6,7 @@ import com.example.doctorbackend.error.ConflictException;
 import com.example.doctorbackend.error.NotFoundException;
 import com.example.doctorbackend.mappers.Mapper;
 import com.example.doctorbackend.repositories.DoctorRepository;
-import com.example.doctorbackend.user.Role;
+import com.example.doctorbackend.enums.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

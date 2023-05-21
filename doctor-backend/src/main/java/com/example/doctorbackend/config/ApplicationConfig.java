@@ -1,6 +1,6 @@
 package com.example.doctorbackend.config;
 
-import com.example.doctorbackend.user.UserRepository;
+import com.example.doctorbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

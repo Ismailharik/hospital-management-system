@@ -1,4 +1,4 @@
-package com.example.doctorbackend.user;
+package com.example.doctorbackend.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,6 @@
 package com.example.doctorbackend;
 
 import com.example.doctorbackend.auth.AuthenticationService;
-import com.example.doctorbackend.auth.RegisterRequest;
-import com.example.doctorbackend.entities.Category;
-import com.example.doctorbackend.entities.Patient;
 import com.example.doctorbackend.repositories.CategoryRepository;
 
 
@@ -11,10 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
-
-import static com.example.doctorbackend.user.Role.ADMIN;
 
 @SpringBootApplication
 public class DoctorBackendApplication {

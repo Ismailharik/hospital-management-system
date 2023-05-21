@@ -1,7 +1,9 @@
 package com.example.doctorbackend.entities;
 
+import com.example.doctorbackend.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,4 +27,6 @@ public class Review {
     private Patient patient; // should be removed
     private String comment;
     private Double rating;// should range between 0 & 5
+
+
 }

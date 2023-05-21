@@ -1,21 +1,17 @@
 package com.example.doctorbackend.auth;
 
 import com.example.doctorbackend.config.JwtService;
-import com.example.doctorbackend.entities.Admin;
-import com.example.doctorbackend.entities.Doctor;
-import com.example.doctorbackend.entities.Patient;
+import com.example.doctorbackend.entities.*;
+import com.example.doctorbackend.enums.TokenType;
 import com.example.doctorbackend.error.NotFoundException;
 import com.example.doctorbackend.repositories.AdminRepository;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
 //import com.example.doctorbackend.repositories.UserRepository;
+import com.example.doctorbackend.repositories.TokenRepository;
 import com.example.doctorbackend.services.DoctorsService;
 import com.example.doctorbackend.services.PatientsService;
-import com.example.doctorbackend.token.Token;
-import com.example.doctorbackend.token.TokenRepository;
-import com.example.doctorbackend.token.TokenType;
-import com.example.doctorbackend.user.Role;
-import com.example.doctorbackend.user.User;
+import com.example.doctorbackend.enums.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

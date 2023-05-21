@@ -1,12 +1,11 @@
 package com.example.doctorbackend.auth;
 
-import com.example.doctorbackend.user.Role;
+import com.example.doctorbackend.enums.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 

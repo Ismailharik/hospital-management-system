@@ -9,7 +9,6 @@ import com.example.doctorbackend.error.NotFoundException;
 import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.repositories.PatientRepository;
 import com.example.doctorbackend.repositories.ReviewRepository;
-import org.springframework.dao.DuplicateKeyException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

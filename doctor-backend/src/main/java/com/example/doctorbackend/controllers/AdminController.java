@@ -1,10 +1,8 @@
 package com.example.doctorbackend.controllers;
 
 import com.example.doctorbackend.auth.RegisterRequest;
-import com.example.doctorbackend.entities.Doctor;
-import com.example.doctorbackend.repositories.DoctorRepository;
 import com.example.doctorbackend.services.AdminService;
-import com.example.doctorbackend.user.Role;
+import com.example.doctorbackend.enums.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

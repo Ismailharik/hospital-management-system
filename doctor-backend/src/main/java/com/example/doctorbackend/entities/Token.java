@@ -1,6 +1,6 @@
-package com.example.doctorbackend.token;
+package com.example.doctorbackend.entities;
 
-import com.example.doctorbackend.user.User;
+import com.example.doctorbackend.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,21 +17,21 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document
 public class Token {
 
-  @Id
-  @GeneratedValue
-  public String id;
+    @Id
+    @GeneratedValue
+    public String id;
 
-  @Column(unique = true)
-  public String token;
+    @Column(unique = true)
+    public String token;
 
-  @Enumerated(EnumType.STRING)
-  public TokenType tokenType = TokenType.BEARER;
+    @Enumerated(EnumType.STRING)
+    public TokenType tokenType = TokenType.BEARER;
 
-  public boolean revoked;
+    public boolean revoked;
 
-  public boolean expired;
+    public boolean expired;
 
-  @DBRef()
-  @Field("user_id")
-  public User user;
+    @DBRef()
+    @Field("user_id")
+    public User user;
 }
