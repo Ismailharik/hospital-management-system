@@ -62,6 +62,9 @@ Spring Security: Handles user authentication, authorization, and overall applica
 
 2. To run all the backend you will need only to run ` docker-compose up`.
 
+## License
+[MIT LICENSE](LICENSE)
+
 
 ## Contributing
 Contributions to the Health Connect project are welcome! If you would like to contribute, please follow these steps:
