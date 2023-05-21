@@ -62,8 +62,8 @@ Spring Security: Handles user authentication, authorization, and overall applica
 
 2. To run all the backend you will need only to run ` docker-compose up`.
 
-## Licence
-[MIT LICENCE](LICENCE)
+## License
+[MIT LICENSE](LICENSE)
 
 
 ## Contributing
