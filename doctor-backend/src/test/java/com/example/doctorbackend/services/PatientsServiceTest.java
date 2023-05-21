@@ -220,7 +220,49 @@ public class PatientsServiceTest {
         verify(patientRepository).findByEmail(patient.getEmail());
     }
 
+    @Test
+    public void addImage_WhenPatientExists_UploadsImageAndReturnsPatientDTO() throws IOException {
+        // Given
+        String patientId = "1";
+        String email = "test@example.com";
+        Patient patient = new Patient();
+        patient.setId(patientId);
+        patient.setEmail(email);
 
+        // Create a mock MultipartFile
+        MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image".getBytes());
+
+        given(patientRepository.findById(eq(patientId))).willReturn(Optional.of(patient));
+        given(patientRepository.save(any(Patient.class))).willReturn(patient);
+
+        // When
+        PatientDTO result = patientsService.addImage(patientId, file);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getEmail()).isEqualTo(email);
+
+        String expectedImageSrc = System.getProperty("user.home") + "/hospital/images/" + email + ".jpg";
+        assertThat(patient.getImage()).isEqualTo(expectedImageSrc);
+
+        verify(patientRepository).findById(patientId);
+        verify(patientRepository).save(patient);
+    }
+    @Test
+    public void addImage_WhenPatientDoesNotExist_ThrowsNotFoundException() throws IOException {
+        // Given
+        String patientId = "1";
+        MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image".getBytes());
+
+        given(patientRepository.findById(eq(patientId))).willReturn(Optional.empty());
+
+        // When and Then
+        assertThatThrownBy(() -> patientsService.addImage(patientId, file))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Patient not found with id : '1'");
+
+        verify(patientRepository).findById(patientId);
+    }
 
 
 
