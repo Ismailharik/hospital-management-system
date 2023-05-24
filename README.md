@@ -1,5 +1,5 @@
 # Health Connect
-### MediConnect: Health management System Platform with Spring Boot and Flutter
+### MediConnect: Hospital management System Platform with Spring Boot and Flutter
 
 <div align="center">
 <img  width="140" src="./images/springboot.png">
